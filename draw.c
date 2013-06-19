@@ -23,5 +23,5 @@ void draw_obj(object_t *object, state_t *state)
 
 	object->draw(object, state);
 
-	glPopMatrix()
+	glPopMatrix();
 }
