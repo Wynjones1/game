@@ -23,8 +23,8 @@ public:
 	float dt;
 	static const int width     = 1600;
 	static const int height    = 1000;
-	constexpr static const float scale   = 0.5;
-	constexpr static const float aspect  = (float)width / height;
+	static float scale;
+	static float aspect;
 	
 	static float get_time(void);
 	/*

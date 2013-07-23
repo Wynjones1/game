@@ -2,6 +2,8 @@
 #include <iostream>
 
 state_t *state = NULL;
+float state_t::scale = 0.5;
+float state_t::aspect = (float)state_t::width / state_t::height;
 
 state_t *state_t::get_state(void)
 {
@@ -14,7 +16,7 @@ state_t *state_t::get_state(void)
 
 float state_t::get_time(void)
 {
-	return glfwGetTime();
+	return (float)glfwGetTime();
 }
 
 state_t::state_t(float dt)
@@ -27,7 +29,7 @@ state_t::state_t(float dt)
 
 	if(glfwInit())
 	{
-		window = glfwCreateWindow(scale * width , scale * height, "Game", NULL, NULL);
+		window = glfwCreateWindow((int)(scale * width) ,(int)(scale * height), "Game", NULL, NULL);
 		glfwMakeContextCurrent(window);
 	}
 
@@ -99,9 +101,9 @@ void state_t::key_callback(GLFWwindow *window, int key, int scan_code, int actio
 #undef X
 void state_t::window_size_callback(GLFWwindow *window, int width, int height)
 {
-	float new_width = aspect * height;
-	float new_height;
-	float excess;
+	int new_width = (int)(aspect * height);
+	int new_height;
+	int excess;
 	if(new_width <= width)
 	{
 		excess = (width - new_width) / 2;
@@ -109,7 +111,7 @@ void state_t::window_size_callback(GLFWwindow *window, int width, int height)
 	}
 	else
 	{
-		new_height = width / aspect;
+		new_height = (int)(width / aspect);
 		excess = (height - new_height) / 2;
 		glViewport(0, excess, width, new_height);
 	}
@@ -118,7 +120,6 @@ void state_t::window_size_callback(GLFWwindow *window, int width, int height)
 void state_t::process_events(void)
 {
 	glfwPollEvents();
-	double x,y;
 }
 
 void state_t::add(object_t *obj)
@@ -128,7 +129,7 @@ void state_t::add(object_t *obj)
 
 void state_t::simulate(void)
 {
-	for(int i = 0; i < objects.size(); i++)
+	for(unsigned int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->pre_simulate();
 		objects[i]->simulate(*this);
@@ -165,14 +166,14 @@ void state_t::render(void)
 {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glBegin(GL_QUADS);
-		glColor3f(0.3, 0.3, 0.3);
+		glColor3f(0.3f, 0.3f, 0.3f);
 		glVertex2i(0,0);
 		glVertex2i(width,0);
 		glVertex2i(width,height);
 		glVertex2i(0,height);
 	glEnd();
 	draw_grid();
-	for(int i = 0; i < objects.size(); i++)
+	for(unsigned int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->pre_draw();
 		objects[i]->draw();

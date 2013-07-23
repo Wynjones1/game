@@ -1,4 +1,5 @@
 #include "ball.h"
+#include <windows.h>
 #include <GL/gl.h>
 #include <algorithm>
 #include "state.h"
@@ -6,9 +7,9 @@
 #include <string.h>
 
 ball_t::ball_t(void)
-: r(1.0)
+: r(5)
 {
-	std::fill_n(colour, 4, 1.0);
+	std::fill_n(colour, 4, 1.0f);
 }
 ball_t::ball_t(int radius)
 : r(radius)
@@ -83,7 +84,7 @@ void temp(float angle, int *x, int *y)
 
 void ball_t::draw(void)
 {
-	float dx = 0.1;
+	float dx = 0.1f;
 	glBegin(GL_TRIANGLE_FAN);
 		glColor4fv(colour);
 		glVertex2f(0.0, 0.0);

@@ -1,5 +1,6 @@
 #include "bounds.h"
 #include <algorithm>
+#include <windows.h>
 #include <GL/gl.h>
 #include <math.h>
 
@@ -10,7 +11,7 @@ bounds_t::bounds_t(int min_in[2], int max_in[2])
 
 	for(int i = 0; i < NUM_DIMENSIONS; i++)
 	{
-		center[i] = (min[i] + max[i]) / 2.0f;
+		center[i] = (min[i] + max[i]) / 2;
 	}
 	width  = center[0] - min[0];
 	height = center[1] - min[1];
@@ -51,7 +52,7 @@ bool bounds_t::overlaps(const bounds_t &bound, int axis) const
 	a_width = center[axis] - min[axis];
 	b_width = bound.center[axis] - bound.min[axis];
 	total = a_width + b_width;
-	abs_cent = fabs(center[axis] - bound.center[axis]);
+	abs_cent = fabs((float)(center[axis] - bound.center[axis]));
 	return !(abs_cent > total);
 }
 

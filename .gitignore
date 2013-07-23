@@ -1,0 +1,9 @@
+*.o
+*.exe
+Debug/
+Release/
+x64/
+*.sdf
+*.vcxproj.filters
+*.vcxproj.user
+*.suo

@@ -1,5 +1,6 @@
 #include "object.h"
 #include <algorithm>
+#include <windows.h>
 #include <GL/gl.h>
 
 object_t::object_t(bool dynamic)
@@ -83,7 +84,7 @@ void object_t::set_scale(int x_in, int y_in)
 
 bool object_t::standing(const object_t &obj)
 {
-	
+	return false;
 }
 
 void object_t::set_x(int *x_in)
