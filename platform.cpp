@@ -1,6 +1,5 @@
 #include "platform.h"
-#include <windows.h>
-#include <GL/gl.h>
+#include <GLFW/glfw3.h>
 
 platform_t::platform_t(int width, int height)
 : width(width)

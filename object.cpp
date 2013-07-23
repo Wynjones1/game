@@ -1,7 +1,6 @@
 #include "object.h"
 #include <algorithm>
-#include <windows.h>
-#include <GL/gl.h>
+#include <GLFW/glfw3.h>
 
 object_t::object_t(bool dynamic)
 : dynamic(dynamic)

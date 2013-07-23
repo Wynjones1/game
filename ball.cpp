@@ -1,6 +1,4 @@
 #include "ball.h"
-#include <windows.h>
-#include <GL/gl.h>
 #include <algorithm>
 #include "state.h"
 #include <math.h>

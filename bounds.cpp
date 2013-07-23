@@ -1,7 +1,5 @@
 #include "bounds.h"
 #include <algorithm>
-#include <windows.h>
-#include <GL/gl.h>
 #include <math.h>
 
 bounds_t::bounds_t(int min_in[2], int max_in[2])

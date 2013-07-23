@@ -1,8 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <GLFW/glfw3.h>
-#include <windows.h>
-#include <GL/gl.h>
 #include <stdlib.h>
 #include "ball.h"
 #include "drawable.h"
