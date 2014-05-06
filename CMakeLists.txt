@@ -1,22 +1,23 @@
 cmake_minimum_required(VERSION 2.8)
 project(game)
 
-include_directories("./deps/include")
 file(GLOB SRC "./src/*.h" "./src/*.cpp")
-
 add_executable(game ${SRC})
 
+include_directories("./deps/GLEW/include")
+include_directories("./deps/SDL2/include")
+include_directories("./deps/glm/include")
+
+add_definitions(-DGLEW_STATIC)
+add_definitions(-DGLM_FORCE_RADIANS=0)
+
 if(MSVC)
-	include_directories("./deps/GLEW/include")
-	include_directories("./deps/SDL2/include")
-	include_directories("./deps/glm/include")
 
 	target_link_libraries(game "./deps/GLEW/lib/Release/Win32/glew32s")
 	target_link_libraries(game "./deps/SDL2/lib/x86/SDL2main")
 	target_link_libraries(game "./deps/SDL2/lib/x86/SDL2")
 
 	add_definitions("/wd4996")
-	add_definitions(/DGLEW_STATIC)
 else()
 	include(FindPkgConfig)
 
@@ -33,4 +34,3 @@ endif()
 find_package(OpenGL)
 target_link_libraries(game ${OPENGL_LIBRARIES})
 
-#add_definitions(-DGLM_FORCE_RADIANS)
