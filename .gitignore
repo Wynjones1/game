@@ -1,10 +1,5 @@
-*.o
-*.exe
-Debug/
-Release/
-x64/
-*.sdf
-*.vcxproj.filters
-*.vcxproj.user
-*.suo
-*.opensdf
+CMakeCache.txt
+CMakeFiles/
+game
+Makefile
+cmake_install.cmake
