@@ -7,10 +7,10 @@ public:
 		Texture(const char *filename);
 		Texture();
 
-		char *data;
-		int   width;
-		int   height;
-		int   bpp;
+		unsigned char *data;
+		int            width;
+		int            height;
+		int            bpp;
 
 		void ReadPPM(const char *filename);
 		void ReadBMP(const char *filename);

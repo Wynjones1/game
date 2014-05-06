@@ -54,8 +54,8 @@ void Texture::ReadPPM(const char *filename)
 	fgets(buf, buf_size, fp);
 	EOF_ERROR(fp);
 
-	data = (char*) calloc(400 * 600, bpp / 8);
-	char *d = data;
+	data = (unsigned char*) calloc(400 * 600, bpp / 8);
+	unsigned char *d = data;
 	for(int i = 0; i < width; i++)
 	{
 		for(int j = 0; j < height; j++)
@@ -83,6 +83,11 @@ void Texture::InitTexture(void)
 	glGenTextures(1, &texture);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 
 	glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 
@@ -115,5 +120,20 @@ Texture::Texture()
 	, height(4)
 	, bpp(24)
 {
-	data = new char[width * height * bpp / 8];
+	data = new unsigned char[width * height * bpp / 8];
+	data[0] = 255;
+	data[1] = 0;
+	data[2] = 0;
+
+	data[3] = 0;
+	data[4] = 255;
+	data[5] = 0;
+
+	data[6] = 0;
+	data[7] = 0;
+	data[8] = 255;
+
+	data[9]  = 255;
+	data[10] = 255;
+	data[11] = 255;
 }

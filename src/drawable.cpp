@@ -17,13 +17,12 @@ void Mesh::ReadHeader(FILE *fp, int &num_vertices, int &num_faces, bool &have_no
 	{
 		sscanf(buf, "element vertex %d", &num_vertices);
 		sscanf(buf, "element face %d", &num_faces);
-		if(strcmp("propery float nx", buf) == 0)
-		if(strncmp("propery float nx", buf, strlen("propery float nx")) == 0)
+		if(strncmp("property float nx", buf, strlen("property float nx")) == 0)
 		{
 			have_normals = true;
 		}
 
-		if(strncmp("propery float s", buf, strlen("propery float s")) == 0)
+		if(strncmp("property float s", buf, strlen("property float s")) == 0)
 		{
 			have_tex    = true;
 		}

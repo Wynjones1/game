@@ -37,23 +37,18 @@ int main(int argc, char **argv)
 	glVertexAttrib4f(2, 0.0, 0.0, 1.0, 1.0);
 	glVertexAttrib2f(3, 0.0, 0.0);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-
 	glm::mat4 projection = glm::perspective(60.0f, g_config.aspect, 0.01f, 1000.0f);
 	glUniformMatrix4fv(program.projection, 1, GL_FALSE, glm::value_ptr(projection)); 
 
 	Mesh *world    = new Mesh(program, "./data/test_world.ply");
-	//Mesh *other    = new Mesh();
+	//Mesh *world    = new Mesh(program);
 
 	world->texture = new Texture("./data/wall.ppm");
-	//other->texture = new Texture("./data/grid.ppm");
+	//world->texture = new Texture("./data/grid.ppm");
+	world->texture = new Texture();
 
 	Player *player = new Player();
 	window.AddDrawable(world);
-	//window.AddDrawable(other);
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 

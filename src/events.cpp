@@ -54,7 +54,7 @@ void EventHandler::KeyDown()
 
 void EventHandler::MouseMotion()
 {
-	g_input_state.mouse_rot[0] = (float) event.motion.xrel;
+	g_input_state.mouse_rot[0] = (float) -event.motion.xrel;
 	g_input_state.mouse_rot[1] = (float) event.motion.yrel;
 }
 

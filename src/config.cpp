@@ -1,8 +1,8 @@
 #include "config.h"
 
 Config::Config()
-: width(200)
-, height(200)
+: width(800)
+, height(500)
 , aspect((float) width / height)
 , fov(45.0f)
 {}
