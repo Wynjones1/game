@@ -1,13 +1,25 @@
 cmake_minimum_required(VERSION 2.8)
 project(game)
 
-file(GLOB SRC "./src/*.h" "./src/*.cpp" "./deps/gl3w/src/gl3w.c")
+option(TESTING "Testing" OFF)
+
+if(TESTING)
+	file(GLOB SRC "./src/testing/*.h" "./src/testing/*.cpp" )
+else()
+	file(GLOB SRC "./src/*.h" "./src/*.cpp")
+endif()
+
 add_executable(game ${SRC})
+
+file(GLOB BASE_SRC "./src/base/*.cpp" "./deps/gl3w/src/gl3w.c")
+add_library(base ${BASE_SRC})
+target_link_libraries(game base)
 
 include_directories("./deps/GLEW/include")
 include_directories("./deps/SDL2/include")
 include_directories("./deps/glm/include")
 include_directories("./deps/gl3w/include")
+include_directories("./src/base")
 
 add_definitions(-DGLEW_STATIC)
 add_definitions(-DGLM_FORCE_RADIANS)
