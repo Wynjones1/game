@@ -6,4 +6,4 @@ run: all
 	./game
 
 clean:
-	rm -rf CMakeCache.txt cmake_install.cmake Makefile CMakeFiles
+	rm -rf CMakeCache.txt cmake_install.cmake CMakeFiles ./game*

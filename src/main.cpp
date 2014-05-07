@@ -38,17 +38,17 @@ int main(int argc, char **argv)
 	glVertexAttrib4f(2, 0.0, 0.0, 1.0, 1.0);
 	glVertexAttrib2f(3, 0.0, 0.0);
 
-	glm::mat4 projection = glm::perspective(60.0f, g_config.aspect, 0.01f, 1000.0f);
+	glm::mat4 projection = glm::perspective(60.0f * (float)(180.0f / M_PI), g_config.aspect, 0.01f, 1000.0f);
 	glUniformMatrix4fv(program.projection, 1, GL_FALSE, glm::value_ptr(projection)); 
 
-	//Mesh *world    = new Mesh(program, "./data/test_world.ply");
-	Mesh *world    = new Mesh(program);
-//	world->texture = new Texture("./data/wall.ppm");
+	Mesh *world    = new Mesh(program, "./data/test_world.ply");
+	//Mesh *world    = new Mesh(program);
+	world->texture = new Texture("./data/wall.ppm");
 
 	Player *player = new Player();
 	window.AddDrawable(world);
 
-	//SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	while(1)
 	{

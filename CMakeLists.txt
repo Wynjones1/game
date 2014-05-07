@@ -10,7 +10,7 @@ include_directories("./deps/glm/include")
 include_directories("./deps/gl3w/include")
 
 add_definitions(-DGLEW_STATIC)
-add_definitions(-DGLM_FORCE_RADIANS=0)
+add_definitions(-DGLM_FORCE_RADIANS)
 
 if(MSVC)
 	target_link_libraries(game "./deps/GLEW/lib/Release/Win32/glew32s")

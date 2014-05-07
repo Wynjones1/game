@@ -2,11 +2,12 @@
 #include "input_state.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#define INV_SQRT2 0.70710678118f
 
 Player::Player()
 : rot(0.0f)
-, rot_speed(1.0f)
-, speed(0.1f)
+, rot_speed(0.01f)
+, speed(1.5f)
 {}
 
 void Player::Simulate(double dt)
@@ -21,12 +22,10 @@ void Player::Simulate(double dt)
 	}
 	if(g_input_state.LetterPressed('a'))
 	{
-		//TurnLeft(dt);
 		StrifeLeft(dt);
 	}
 	if(g_input_state.LetterPressed('d'))
 	{
-		//TurnRight(dt);
 		StrifeRight(dt);
 	}
 	if(g_input_state.mouse_rot[0])
@@ -47,12 +46,17 @@ void Player::Report(void)
 
 void Player::Turn(void)
 {
-	rot += (float) g_input_state.mouse_rot[0] * 0.1f;
+	rot += (float) g_input_state.mouse_rot[0] * rot_speed;
 }
 
 void Player::MoveForward(double dt)
 {
-	glm::vec4 mov(0, 0, speed * dt * -1, 1);
+	float step = 1.0;
+	if(g_input_state.LetterPressed('a') != g_input_state.LetterPressed('d'))
+	{
+		step = INV_SQRT2;
+	}
+	glm::vec4 mov(0, 0, speed * dt * -step, 1);
 	mov     = glm::rotate(glm::mat4(), rot, glm::vec3(0, 1, 0)) * mov;
 	pos[0] += mov[0];
 	pos[1] += mov[1];
@@ -61,7 +65,12 @@ void Player::MoveForward(double dt)
 
 void Player::MoveBackward(double dt)
 {
-	glm::vec4 mov(0, 0, speed * dt * 1, 1);
+	float step = 1.0;
+	if(g_input_state.LetterPressed('a') != g_input_state.LetterPressed('d'))
+	{
+		step = INV_SQRT2;
+	}
+	glm::vec4 mov(0, 0, speed * dt * step, 1);
 	mov     = glm::rotate(glm::mat4(), rot, glm::vec3(0, 1, 0)) * mov;
 	pos[0] += mov[0];
 	pos[1] += mov[1];
@@ -89,7 +98,12 @@ glm::mat4 Player::GetViewMatrix(void)
 
 void Player::StrifeLeft(double dt)
 {
-	glm::vec4 mov(speed * dt * -1, 0, 0, 1);
+	float step = 1.0;
+	if(g_input_state.LetterPressed('w') != g_input_state.LetterPressed('s'))
+	{
+		step = INV_SQRT2;
+	}
+	glm::vec4 mov(speed * dt * -step, 0, 0, 1);
 	mov     = glm::rotate(glm::mat4(), rot, glm::vec3(0, 1, 0)) * mov;
 	pos[0] += mov[0];
 	pos[1] += mov[1];
@@ -97,7 +111,12 @@ void Player::StrifeLeft(double dt)
 }
 void Player::StrifeRight(double dt)
 {
-	glm::vec4 mov(speed * dt * 1, 0, 0, 1);
+	float step = 1.0;
+	if(g_input_state.LetterPressed('w') != g_input_state.LetterPressed('s'))
+	{
+		step = INV_SQRT2;
+	}
+	glm::vec4 mov(speed * dt * step, 0, 0, 1);
 	mov     = glm::rotate(glm::mat4(), rot, glm::vec3(0, 1, 0)) * mov;
 	pos[0] += mov[0];
 	pos[1] += mov[1];
