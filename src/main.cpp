@@ -35,20 +35,33 @@ int main(int argc, char **argv)
 	glUniformMatrix4fv(program.projection, 1, GL_FALSE, glm::value_ptr(projection)); 
 
 	Mesh *world    = new Mesh(program, "./data/test_world.ply");
-	//Mesh *world    = new Mesh(program);
 	world->texture = new Texture("./data/wall.ppm");
 
 	Player *player = new Player();
 	window.AddDrawable(world);
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
-
+	float time = SDL_GetTicks() / 1000.0f;
+	float new_time, frame_time;
+	float accumulator = 0.0;
+	float dt = 0.1f;
 	while(1)
 	{
-		player->Simulate();
+		new_time   = SDL_GetTicks() / 1000.0f;
+		frame_time = new_time - time;
+		time       = new_time;
+
+		accumulator += frame_time;
+
+		while(accumulator >= dt)
+		{
+			player->Simulate(dt);
+			handler.HandleEvents();
+			accumulator -= dt;
+		}
+
 		glUniformMatrix4fv(program.view, 1, GL_FALSE, glm::value_ptr(player->GetViewMatrix()));
 		window.Render();
-		handler.HandleEvents();
 	}
 
 	return 0;
