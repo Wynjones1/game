@@ -82,6 +82,8 @@ Window init(void)
 
 	program.Use();
 
+	//glUniform1i(glGetUniformLocation(program.program_id, "sampler0"), 0);
+
 	glm::mat4 temp_uniform = glm::mat4(1.0);
 	glUniformMatrix4fv(program.model,      1, GL_FALSE, &temp_uniform[0][0]);
 	glUniformMatrix4fv(program.view,       1, GL_FALSE, &temp_uniform[0][0]);

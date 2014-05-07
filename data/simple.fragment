@@ -3,9 +3,9 @@ in vec4  fColour;
 in vec2  fTex;
 out vec4 colour;
 
-uniform sampler2D tex;
+uniform sampler2D sampler0;
 
 void main()
 {
-	colour = texture(tex, fTex);
+	colour = texture(sampler0, fTex);
 }
