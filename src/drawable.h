@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <GL/glew.h>
+#include <GL/gl3w.h>
 #include <glm/glm.hpp>
 #include "texture.h"
 #include "shaders.h"

@@ -190,7 +190,7 @@ void Mesh::InitBuffers(void)
 
 void Mesh::Draw()
 {
-	if(texture)texture->Bind();
+	//if(texture)texture->Bind();
 	glm::mat4 model = GetModelMatrix();
 	glUniformMatrix4fv(program.model, 1, GL_FALSE, glm::value_ptr(model));
 	glDrawElements(GL_TRIANGLES, faces.size(), GL_UNSIGNED_SHORT, NULL);

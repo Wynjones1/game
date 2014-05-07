@@ -1,5 +1,5 @@
 #include "window.h"
-#include <GL/glew.h>
+#include <GL/gl3w.h>
 #include <iostream>
 
 Window::Window(int width, int height)
@@ -26,13 +26,9 @@ Window::Window(int width, int height)
 
 	context = SDL_GL_CreateContext(window);
 
-	GLenum glewStatus = glewInit();
-	if(glewStatus != GLEW_OK)
+	if(gl3wInit())
 	{
-		std::cout << "Could not initialise GLEW: "
-				  << glewGetErrorString(glewStatus)
-				  << std::endl;
-		exit(-1);
+		exit(1);
 	}
 
 	Render();

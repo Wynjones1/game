@@ -1,14 +1,14 @@
 #include "player.h"
 #include "input_state.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 
 Player::Player()
 : rot(0.0f)
 , rot_speed(1.0f)
 , speed(0.1f)
-{
+{}
 
-}
 void Player::Simulate(double dt)
 {
 	if(g_input_state.LetterPressed('w'))
@@ -33,6 +33,16 @@ void Player::Simulate(double dt)
 	{
 		Turn();
 	}
+	Report();
+}
+
+void Player::Report(void)
+{
+	std::cout << "Pos      : " << pos.x << " " << pos.y << " " << pos.z  << std::endl;
+	std::cout << "Rot      : " << rot       << std::endl;
+	std::cout << "Rot Speed: " << rot_speed << std::endl;
+	std::cout << "Speed    : " << speed     << std::endl;
+	std::cout << std::endl;
 }
 
 void Player::Turn(void)

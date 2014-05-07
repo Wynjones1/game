@@ -12,6 +12,7 @@ public:
 	float     speed;
 
 	void      Simulate(double dt = 1.0 / 60.0);
+	void      Report(void);
 	void      MoveForward(double dt);
 	void      MoveBackward(double dt);
 	void      TurnLeft(double dt);
