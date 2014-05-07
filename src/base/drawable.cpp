@@ -149,6 +149,9 @@ Mesh::Mesh(Program &program)
 
 void Mesh::InitBuffers(void)
 {
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
 	glGenBuffers(1, &vbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices[0]) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
@@ -182,9 +185,13 @@ void Mesh::InitBuffers(void)
 		glEnableVertexAttribArray(3);
 	}
 
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 	glGenBuffers(1, &fbuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, fbuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(faces[0]) * faces.size(), faces.data(), GL_STATIC_DRAW);
+
+	glBindVertexArray(0);
 }
 
 void Mesh::Draw()
@@ -192,7 +199,9 @@ void Mesh::Draw()
 	//if(texture)texture->Bind();
 	glm::mat4 model = GetModelMatrix();
 	glUniformMatrix4fv(program.model, 1, GL_FALSE, glm::value_ptr(model));
+	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faces.size(), GL_UNSIGNED_SHORT, NULL);
+	glBindVertexArray(0);
 }
 
 void Mesh::AddFace(int *data)

@@ -32,7 +32,7 @@ void Player::Simulate(double dt)
 	{
 		Turn();
 	}
-	Report();
+	//Report();
 }
 
 void Player::Report(void)

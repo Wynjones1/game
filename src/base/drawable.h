@@ -53,7 +53,7 @@ private:
 	std::vector<float>    texcoords;
 	std::vector<GLushort> faces;
 
-	GLuint vbuffer, nbuffer, tbuffer, fbuffer, cbuffer;
+	GLuint vao, vbuffer, nbuffer, tbuffer, fbuffer, cbuffer;
 
 	void ReadHeader(FILE *fp, int &num_vertices, int &num_faces, bool &have_normals, bool &have_tex);
 	void ReadVertexData(FILE *fp, int num, bool have_normals, bool have_tex);
