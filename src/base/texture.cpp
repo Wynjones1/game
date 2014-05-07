@@ -91,14 +91,16 @@ void Texture::InitTexture(void)
 
 	glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 
-	//Set the sampler.
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	//Set up the sampler.
 	//glGenSamplers(1, &sampler);
 	//glBindSampler(0, sampler);
 }
 
 void Texture::Bind(void)
 {
-	//glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
 	//glBindSampler(0, sampler);
 }
 
