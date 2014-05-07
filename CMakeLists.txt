@@ -9,7 +9,7 @@ include_directories("./deps/glm/include")
 include_directories("./deps/gl3w/include")
 include_directories("./src/base")
 
-add_definitions(-DGLM_FORCE_RADIANS)
+add_definitions(-DGLM_FORCE_RADIANS=1)
 
 if(MSVC)
 	target_link_libraries(base "./deps/SDL2/lib/x86/SDL2main")
