@@ -1,0 +1,11 @@
+#version 330 core
+in vec4  fColour;
+in vec2  fTex;
+out vec4 colour;
+
+uniform sampler2D tex;
+
+void main()
+{
+	colour = fColour;//texture(tex, fTex);
+}

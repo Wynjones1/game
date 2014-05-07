@@ -7,5 +7,5 @@ uniform sampler2D tex;
 
 void main()
 {
-	colour = fColour;//texture(tex, fTex);
+	colour = texture(tex, fTex);
 }

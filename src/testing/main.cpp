@@ -49,8 +49,8 @@ Window init(void)
 {
 	Window window = Window(400, 400);
 
-	Shader vert = Shader(GL_VERTEX_SHADER, "./data/simple.vertex");
-	Shader frag = Shader(GL_FRAGMENT_SHADER, "./data/simple.fragment");
+	Shader vert = Shader(GL_VERTEX_SHADER, "./data/testing.vertex");
+	Shader frag = Shader(GL_FRAGMENT_SHADER, "./data/testing.fragment");
 
 	Program program = Program();
 	program.AddShader(vert);
