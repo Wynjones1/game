@@ -1,8 +1,10 @@
 CMakeCache.txt
 CMakeFiles/
 game
+testing
 Makefile
 cmake_install.cmake
+*.a
 *.vcxproj
 *.filters
 *.cache
