@@ -11,9 +11,11 @@ class Drawable
 public:
 	Drawable(Program &program);
 	virtual void Draw() = 0;
+	virtual void Simulate(float dt) = 0;
 	virtual glm::mat4 GetModelMatrix() = 0;
 	glm::mat4 model;
 	Program &program;
+	bool alive;
 };
 
 class Mesh : public Drawable
@@ -23,6 +25,7 @@ public:
 	Mesh(Program &program, const char *filename);
 
 	void Draw();
+	void Simulate(float dt);
 
 	void AddVertex(double *data);
 	void AddVertex(double v0, double v1, double v2);

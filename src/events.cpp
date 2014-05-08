@@ -17,6 +17,8 @@ void EventHandler::KeyUp()
 		break;
 	case SDLK_RIGHT:
 		g_input_state.right = false;
+	case SDLK_SPACE:
+		g_input_state.space_key = false;
 		break;
 	}
 
@@ -43,6 +45,9 @@ void EventHandler::KeyDown()
 		break;
 	case SDLK_RIGHT:
 		g_input_state.right = true;
+		break;
+	case SDLK_SPACE:
+		g_input_state.space_key = true;
 		break;
 	}
 

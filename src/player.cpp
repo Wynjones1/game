@@ -7,7 +7,7 @@
 Player::Player()
 : rot(0.0f)
 , rot_speed(0.01f)
-, speed(1.5f)
+, speed(5.0f)
 {}
 
 void Player::Simulate(double dt)

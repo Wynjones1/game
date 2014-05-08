@@ -10,9 +10,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "config.h"
 #include "texture.h"
+#include "weapons.h"
 
 int main(int argc, char **argv)
 {
+	/* Initialise the game */
 	Window       window = Window(g_config.width, g_config.height);
 
 	EventHandler handler;
@@ -34,17 +36,19 @@ int main(int argc, char **argv)
 	glm::mat4 projection = glm::perspective(60.0f * (float)(180.0f / M_PI), g_config.aspect, 0.01f, 1000.0f);
 	glUniformMatrix4fv(program.projection, 1, GL_FALSE, glm::value_ptr(projection)); 
 
-	Mesh *world    = new Mesh(program, "./data/test_world.ply");
-	world->texture = new Texture("./data/wall.ppm");
+	//Mesh *world    = new Mesh(program, "./data/test_world.ply");
+	//world->texture = new Texture("./data/wall.ppm");
+	//window.AddDrawable(world);
 
 	Player *player = new Player();
-	window.AddDrawable(world);
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
+
+	/* Start the mainloop */
 	float time = SDL_GetTicks() / 1000.0f;
 	float new_time, frame_time;
 	float accumulator = 0.0;
-	float dt = 0.1f;
+	float dt = 0.01f;
 	while(1)
 	{
 		new_time   = SDL_GetTicks() / 1000.0f;
@@ -56,6 +60,31 @@ int main(int argc, char **argv)
 		while(accumulator >= dt)
 		{
 			player->Simulate(dt);
+			if(g_input_state.space_key)
+			{
+				window.AddDrawable(new Bullet(program, player->pos, glm::vec3(-sinf(player->rot), 0, -cosf(player->rot))));
+			}
+			for(unsigned int i = 0; i < window.drawables.size();)
+			{
+				auto d = window.drawables[i];
+				d->Simulate(dt);
+				if(!d->alive)//Kill the object
+				{
+					window.drawables.erase(window.drawables.begin() + i);
+				}
+				else
+				{
+					i++;
+				}
+			}
+			for(auto d : window.drawables)
+			{
+				d->Simulate(dt);
+				if(!d->alive)
+				{
+
+				}
+			}
 			handler.HandleEvents();
 			accumulator -= dt;
 		}

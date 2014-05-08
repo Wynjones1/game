@@ -6,6 +6,7 @@
 
 Drawable::Drawable(Program &program)
 : program(program)
+, alive(true)
 {}
 
 /* Read in the mesh from a ply file */
@@ -268,3 +269,6 @@ glm::mat4 Mesh::GetModelMatrix()
 	glm::mat4 out(1.0);
 	return glm::translate(out, pos);
 }
+
+void Mesh::Simulate(float dt)
+{}

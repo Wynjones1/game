@@ -10,6 +10,7 @@ public:
 
 	std::array<bool, 26> letter_keys;
 	bool  left, right, up, down;
+	bool  space_key;
 	float mouse_rot[2];
 
 	bool LetterPressed(char letter)
