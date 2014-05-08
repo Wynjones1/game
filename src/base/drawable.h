@@ -67,7 +67,7 @@ class Axis : public Drawable
 {
 public:
 	Axis(Program &program)
-	: Drawable()
+	: Drawable(program)
 	{
 		float vertex_data[] = 
 		{
@@ -94,12 +94,12 @@ public:
 
 		glBindVertexArray(vao);
 
-			glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
+			glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_data), vertex_data, GL_STATIC_DRAW);
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 			glEnableVertexAttribArray(0);
 
-			glBindBuffer(GL_ARRAY_BUFFER, buffer[1]);
+			glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(colour_data), colour_data, GL_STATIC_DRAW);
 			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 			glEnableVertexAttribArray(1);
@@ -109,7 +109,8 @@ public:
 
 	void Draw()
 	{
-		glBindVertexArray(voa);
+		program.Use();
+		glBindVertexArray(vao);
 		glDrawArrays(GL_LINES, 0, 18);
 		glBindVertexArray(0);
 	}
@@ -118,6 +119,11 @@ public:
 	{
 	
 	}
+
+	glm::mat4 GetModelMatrix(void)
+	{
+		return glm::mat4(1.0);
+	}
 private:
-	GLuint voa, buffers[2];
+	GLuint vao, buffers[2];
 };

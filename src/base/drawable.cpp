@@ -197,6 +197,7 @@ void Mesh::InitBuffers(void)
 
 void Mesh::Draw()
 {
+	program.Use();
 	if(texture)texture->Bind();
 	glm::mat4 model = GetModelMatrix();
 	glUniformMatrix4fv(program.model, 1, GL_FALSE, glm::value_ptr(model));

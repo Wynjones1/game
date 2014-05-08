@@ -67,3 +67,11 @@ void Program::Use()
 {
 	glUseProgram(program_id);
 }
+
+Program::Program(const char *vertex_shader, const char *fragment_shader)
+{
+	program_id = glCreateProgram();
+	AddShader(Shader(GL_VERTEX_SHADER, vertex_shader));
+	AddShader(Shader(GL_FRAGMENT_SHADER, fragment_shader));
+	Compile();
+}

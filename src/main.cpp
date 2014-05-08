@@ -18,13 +18,7 @@ int main(int argc, char **argv)
 	Window       window = Window(g_config.width, g_config.height);
 
 	EventHandler handler;
-	Program      program;
-	Shader       vertex_shader   = Shader(GL_VERTEX_SHADER,   "./data/simple.vertex");
-	Shader       fragment_shader = Shader(GL_FRAGMENT_SHADER, "./data/simple.fragment");
-
-	program.AddShader(vertex_shader);
-	program.AddShader(fragment_shader);
-	program.Compile();
+	Program      program("./data/simple.vertex", "./data/simple.fragment");
 	program.Use();
 
 	glEnable(GL_DEPTH_TEST);
@@ -39,6 +33,7 @@ int main(int argc, char **argv)
 	Mesh *world    = new Mesh(program, "./data/test_world.ply");
 	world->texture = new Texture("./data/wall.ppm");
 	window.AddDrawable(world);
+	window.AddDrawable(new Axis(Program("./data/axis.vertex", "./data/axis.fragment")));
 
 	Player *player = new Player();
 
@@ -49,6 +44,7 @@ int main(int argc, char **argv)
 	float new_time, frame_time;
 	float accumulator = 0.0;
 	float dt = 0.01f;
+	Texture *tex0 = new Texture("./data/grid.ppm");
 	while(1)
 	{
 		new_time   = SDL_GetTicks() / 1000.0f;
@@ -62,7 +58,9 @@ int main(int argc, char **argv)
 			player->Simulate(dt);
 			if(g_input_state.space_key)
 			{
-				window.AddDrawable(new Bullet(program, player->pos, glm::vec3(-sinf(player->rot), 0, -cosf(player->rot))));
+				Bullet *temp = new Bullet(program, player->pos, glm::vec3(-sinf(player->rot), 0, -cosf(player->rot)));
+				temp->texture = tex0;
+				window.AddDrawable(temp);
 			}
 			for(unsigned int i = 0; i < window.drawables.size();)
 			{
@@ -77,18 +75,10 @@ int main(int argc, char **argv)
 					i++;
 				}
 			}
-			for(auto d : window.drawables)
-			{
-				d->Simulate(dt);
-				if(!d->alive)
-				{
-
-				}
-			}
 			handler.HandleEvents();
 			accumulator -= dt;
 		}
-
+		program.Use();
 		glUniformMatrix4fv(program.view, 1, GL_FALSE, glm::value_ptr(player->GetViewMatrix()));
 		window.Render();
 	}

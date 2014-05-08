@@ -13,6 +13,7 @@ class Program
 {
 public:
 	Program();
+	Program(const char *vertex_shader, const char *fragment_shader);
 	void   AddShader(const Shader &shader);
 	void   Compile();
 	void   Use();
