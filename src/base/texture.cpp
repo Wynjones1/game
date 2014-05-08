@@ -104,6 +104,11 @@ void Texture::Bind(void)
 	//glBindSampler(0, sampler);
 }
 
+void Texture::Unbind(void)
+{
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 Texture::Texture(const char *filename)
 {
 	if(ends_with(filename, ".bmp"))

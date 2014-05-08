@@ -62,3 +62,62 @@ private:
 	void ReadVertexData(FILE *fp, int num, bool have_normals, bool have_tex);
 	void ReadFaceData(FILE *fp, int num);
 };
+
+class Axis : public Drawable
+{
+public:
+	Axis(Program &program)
+	: Drawable()
+	{
+		float vertex_data[] = 
+		{
+			0, 0, 0,
+			1, 0, 0,
+			0, 0, 0,
+			0, 1, 0,
+			0, 0, 0,
+			0, 0, 1
+		};
+
+		float colour_data[] =
+		{
+			1, 0, 0,
+			1, 0, 0,
+			0, 1, 0,
+			0, 1, 0,
+			0, 0, 1,
+			0, 0, 1
+		};
+
+		glGenVertexArrays(1, &vao);
+		glGenBuffers(2, buffers);
+
+		glBindVertexArray(vao);
+
+			glBindBuffer(GL_ARRAY_BUFFER, buffer[0]);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_data), vertex_data, GL_STATIC_DRAW);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+			glEnableVertexAttribArray(0);
+
+			glBindBuffer(GL_ARRAY_BUFFER, buffer[1]);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(colour_data), colour_data, GL_STATIC_DRAW);
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+			glEnableVertexAttribArray(1);
+
+		glBindVertexArray(0);
+	}
+
+	void Draw()
+	{
+		glBindVertexArray(voa);
+		glDrawArrays(GL_LINES, 0, 18);
+		glBindVertexArray(0);
+	}
+
+	void Simulate(float dt)
+	{
+	
+	}
+private:
+	GLuint voa, buffers[2];
+};

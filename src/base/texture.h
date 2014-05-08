@@ -17,6 +17,7 @@ public:
 
 		void InitTexture(void);
 		void Bind(void);
+		void Unbind(void);
 
 		/* OpenGL State */
 		GLuint texture;

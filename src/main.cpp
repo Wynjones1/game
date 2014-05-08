@@ -36,9 +36,9 @@ int main(int argc, char **argv)
 	glm::mat4 projection = glm::perspective(60.0f * (float)(180.0f / M_PI), g_config.aspect, 0.01f, 1000.0f);
 	glUniformMatrix4fv(program.projection, 1, GL_FALSE, glm::value_ptr(projection)); 
 
-	//Mesh *world    = new Mesh(program, "./data/test_world.ply");
-	//world->texture = new Texture("./data/wall.ppm");
-	//window.AddDrawable(world);
+	Mesh *world    = new Mesh(program, "./data/test_world.ply");
+	world->texture = new Texture("./data/wall.ppm");
+	window.AddDrawable(world);
 
 	Player *player = new Player();
 

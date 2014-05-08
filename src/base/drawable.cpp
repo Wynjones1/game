@@ -203,6 +203,7 @@ void Mesh::Draw()
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faces.size(), GL_UNSIGNED_SHORT, NULL);
 	glBindVertexArray(0);
+	if(texture)texture->Unbind();
 }
 
 void Mesh::AddFace(int *data)
