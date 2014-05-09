@@ -58,9 +58,10 @@ void Program::Compile()
 				  << std::endl;
 		exit(-1);
 	}
-	model      = glGetUniformLocation(program_id, "model");
-	view       = glGetUniformLocation(program_id, "view");
-	projection = glGetUniformLocation(program_id, "projection");
+	model       = glGetUniformLocation(program_id, "model");
+	view        = glGetUniformLocation(program_id, "view");
+	projection  = glGetUniformLocation(program_id, "projection");
+	has_texture = glGetUniformLocation(program_id, "has_texture");
 }
 
 void Program::Use()

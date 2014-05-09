@@ -4,6 +4,6 @@
 class AABB : public Drawable
 {
 public:
-	void Draw();
+	void Draw(Program &program);
 	glm::vec3 min, max;
 };

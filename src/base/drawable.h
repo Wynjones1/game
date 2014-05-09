@@ -9,65 +9,14 @@
 class Drawable
 {
 public:
-	Drawable(Program &program);
-	virtual void Draw() = 0;
-	virtual void Simulate(float dt) = 0;
-	virtual glm::mat4 GetModelMatrix() = 0;
-	glm::mat4 model;
-	Program &program;
-	bool alive;
-};
-
-class Mesh : public Drawable
-{
-public:
-	Mesh(Program &program);
-	Mesh(Program &program, const char *filename);
-
-	void Draw();
-	void Simulate(float dt);
-
-	void AddVertex(double *data);
-	void AddVertex(double v0, double v1, double v2);
-
-	void AddNormal(double *data);
-	void AddNormal(double n0, double n1, double n2);
-
-	void AddTexcoord(double *data);
-	void AddTexcoord(double t0, double t1);
-
-	void AddColour(double *data);
-	void AddColour(double c0, double c1, double c2);
-
-	void AddFace(int *data);
-	void AddFace(int f0, int f1, int f2);
-
-	void InitBuffers(void);
-
-	glm::vec3 pos;
-	glm::mat4 GetModelMatrix();
-
-	Texture *texture;
-
-private:
-	std::vector<float>    vertices;
-	std::vector<float>    colours;
-	std::vector<float>    normals;
-	std::vector<float>    texcoords;
-	std::vector<GLushort> faces;
-
-	GLuint vao, vbuffer, nbuffer, tbuffer, fbuffer, cbuffer;
-
-	void ReadHeader(FILE *fp, int &num_vertices, int &num_faces, bool &have_normals, bool &have_tex);
-	void ReadVertexData(FILE *fp, int num, bool have_normals, bool have_tex);
-	void ReadFaceData(FILE *fp, int num);
+	virtual void Draw(Program &program) = 0;
 };
 
 class Axis : public Drawable
 {
 public:
-	Axis(Program &program)
-	: Drawable(program)
+	Axis()
+	: Drawable()
 	{
 		float vertex_data[] = 
 		{
@@ -107,9 +56,10 @@ public:
 		glBindVertexArray(0);
 	}
 
-	void Draw()
+	void Draw(Program &program)
 	{
-		program.Use();
+		glUniformMatrix4fv(program.model, 1, GL_FALSE, &glm::mat4(1.0)[0][0]);
+		glUniform1i(program.has_texture, 0);
 		glBindVertexArray(vao);
 		glDrawArrays(GL_LINES, 0, 18);
 		glBindVertexArray(0);
@@ -120,10 +70,6 @@ public:
 	
 	}
 
-	glm::mat4 GetModelMatrix(void)
-	{
-		return glm::mat4(1.0);
-	}
 private:
 	GLuint vao, buffers[2];
 };

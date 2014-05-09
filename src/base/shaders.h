@@ -18,5 +18,5 @@ public:
 	void   Compile();
 	void   Use();
 	GLuint program_id;
-	GLuint model, view, projection;
+	GLuint model, view, projection, has_texture;
 };

@@ -30,28 +30,15 @@ Window::Window(int width, int height)
 	{
 		exit(1);
 	}
-
-	Render();
-}
-
-void Window::Render(void)
-{
+	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	for(auto d : drawables)
-	{
-		d->Draw();
-	}
 	SwapBuffer();
-}
-
-void Window::AddDrawable(Drawable *d)
-{
-	drawables.push_back(d);
 }
 
 void Window::SwapBuffer(void)
 {
 	SDL_GL_SwapWindow(window);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 Window::~Window(void)

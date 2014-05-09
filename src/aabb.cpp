@@ -1,5 +1,5 @@
 #include "aabb.h"
 
-void AABB::Draw()
+void AABB::Draw(Program &program)
 {
 }

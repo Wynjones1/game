@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(game)
 
-file(GLOB BASE_SRC "./src/base/*.cpp" "./deps/gl3w/src/gl3w.c")
+file(GLOB BASE_SRC "./src/base/*.cpp" "./src/base/*.h" "./deps/gl3w/src/gl3w.c")
 add_library(base ${BASE_SRC})
 
 include_directories("./deps/SDL2/include")

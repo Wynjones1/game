@@ -11,33 +11,41 @@
 #include "config.h"
 #include "texture.h"
 #include "weapons.h"
+#include "object.h"
+
+void Setup(void)
+{
+	glEnable(GL_DEPTH_TEST);
+	glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
+	glVertexAttrib4f(1, 0.0, 1.0, 0.0, 1.0);
+	glVertexAttrib4f(2, 0.0, 0.0, 1.0, 1.0);
+	glVertexAttrib2f(3, 0.0, 0.0);
+}
 
 int main(int argc, char **argv)
 {
 	/* Initialise the game */
 	Window       window = Window(g_config.width, g_config.height);
 
+	Setup();
+
 	EventHandler handler;
 	Program      program("./data/simple.vertex", "./data/simple.fragment");
 	program.Use();
 
-	glEnable(GL_DEPTH_TEST);
-	glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
-	glVertexAttrib4f(1, 0.0, 1.0, 0.0, 1.0);
-	glVertexAttrib4f(2, 0.0, 0.0, 1.0, 1.0);
-	glVertexAttrib2f(3, 0.0, 0.0);
-
 	glm::mat4 projection = glm::perspective(60.0f * (float)(180.0f / M_PI), g_config.aspect, 0.01f, 1000.0f);
 	glUniformMatrix4fv(program.projection, 1, GL_FALSE, glm::value_ptr(projection)); 
 
-	Mesh *world    = new Mesh(program, "./data/test_world.ply");
+	Mesh *world    = new Mesh("./data/test_world.ply");
 	world->texture = new Texture("./data/wall.ppm");
-	window.AddDrawable(world);
-	window.AddDrawable(new Axis(Program("./data/axis.vertex", "./data/axis.fragment")));
-
-	Player *player = new Player();
+	Axis axis;
+	Player player = Player();
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
+
+	std::vector<Object*> objects;
+
+	//objects.push_back(world);
 
 	/* Start the mainloop */
 	float time = SDL_GetTicks() / 1000.0f;
@@ -55,32 +63,29 @@ int main(int argc, char **argv)
 
 		while(accumulator >= dt)
 		{
-			player->Simulate(dt);
+			player.Simulate(dt);
 			if(g_input_state.space_key)
 			{
-				Bullet *temp = new Bullet(program, player->pos, glm::vec3(-sinf(player->rot), 0, -cosf(player->rot)));
-				temp->texture = tex0;
-				window.AddDrawable(temp);
+				Bullet *temp = new Bullet(player.pos, glm::vec3(-sinf(player.rot), 0, -cosf(player.rot)));
+				objects.push_back(temp);
 			}
-			for(unsigned int i = 0; i < window.drawables.size();)
+			for(auto s : objects)
 			{
-				auto d = window.drawables[i];
-				d->Simulate(dt);
-				if(!d->alive)//Kill the object
-				{
-					window.drawables.erase(window.drawables.begin() + i);
-				}
-				else
-				{
-					i++;
-				}
+				s->Simulate(dt);
 			}
+
 			handler.HandleEvents();
 			accumulator -= dt;
 		}
 		program.Use();
-		glUniformMatrix4fv(program.view, 1, GL_FALSE, glm::value_ptr(player->GetViewMatrix()));
-		window.Render();
+		glUniformMatrix4fv(program.view, 1, GL_FALSE, glm::value_ptr(player.GetViewMatrix()));
+		//Draw each of the objects.
+		for(auto d : objects)
+		{
+			Draw(d, program);
+		}
+		axis.Draw(program);
+		window.SwapBuffer();
 	}
 
 	return 0;

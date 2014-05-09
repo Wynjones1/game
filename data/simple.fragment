@@ -4,8 +4,16 @@ in vec2  fTex;
 out vec4 colour;
 
 uniform sampler2D sampler0;
+uniform bool      has_texture;
 
 void main()
 {
-	colour = texture(sampler0, fTex);
+	if(has_texture)
+	{
+		colour = texture(sampler0, fTex);
+	}
+	else
+	{
+		colour = fColour;
+	}
 }

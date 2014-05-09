@@ -1,36 +1,42 @@
 #pragma once
-#include "drawable.h"
+#include "object.h"
+#include "mesh.h"
+#include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 
-class Bullet : public Mesh
+class Bullet : public DynamicObject
 {
 public:
-	Bullet(Program &program, glm::vec3 pos, glm::vec3 vel)
-		: Mesh(program)
-		, vel(vel)
+	Bullet(glm::vec3 pos, glm::vec3 vel)
+		: vel(vel)
+		, pos(pos)
 		, life(10.0)
+		, model_matrix(1.0)
 	{
-		this->pos = pos;
+		if(!mesh)
+		{
+			mesh = new Mesh();
+		}
 	}
 
 	void Simulate(float dt)
 	{
-
-		pos[0] += 50.0f * vel[0] * dt;
-		pos[1] += 50.0f * vel[1] * dt;
-		pos[2] += 50.0f * vel[2] * dt;
+		pos += 5 * dt * vel;
+		model_matrix = glm::translate(glm::mat4(1.0), pos);
+		model_matrix = glm::scale(model_matrix, glm::vec3(0.5, 0.5, 0.5));
 		life -= dt;
-		//if(life < 0) alive = false;
-		
-
 	}
 
-	void Draw()
+	void Draw(Program &program)
 	{
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		Mesh::Draw();
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glUniformMatrix4fv(program.model, 1, GL_FALSE, &model_matrix[0][0]);
+		mesh->Draw(program);
 	}
 
 	glm::vec3 vel;
+	glm::vec3 pos;
 	float life;
+private:
+	static Mesh *mesh;
+	glm::mat4 model_matrix;
 };
