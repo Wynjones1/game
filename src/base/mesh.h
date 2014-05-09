@@ -28,7 +28,6 @@ public:
 
 	Texture *texture;
 
-private:
 	std::vector<float>    vertices;
 	std::vector<float>    colours;
 	std::vector<float>    normals;

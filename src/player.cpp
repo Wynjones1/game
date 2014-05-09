@@ -2,15 +2,18 @@
 #include "input_state.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include <algorithm>
 #define INV_SQRT2 0.70710678118f
 
 Player::Player()
 : rot(0.0f)
 , rot_speed(0.01f)
 , speed(5.0f)
+, fire_recharge(0.0f)
+, recharge_rate(1.0f)
 {}
 
-void Player::Simulate(double dt)
+void Player::Simulate(float dt)
 {
 	if(g_input_state.LetterPressed('w'))
 	{
@@ -32,6 +35,7 @@ void Player::Simulate(double dt)
 	{
 		Turn();
 	}
+	fire_recharge = std::max(0.0f, fire_recharge - recharge_rate * dt);
 	//Report();
 }
 

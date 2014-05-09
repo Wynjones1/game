@@ -45,7 +45,8 @@ int main(int argc, char **argv)
 
 	std::vector<Object*> objects;
 
-	//objects.push_back(world);
+	objects.push_back(world);
+	objects.push_back(new Mesh("./data/gun1.ply"));
 
 	/* Start the mainloop */
 	float time = SDL_GetTicks() / 1000.0f;
@@ -64,14 +65,22 @@ int main(int argc, char **argv)
 		while(accumulator >= dt)
 		{
 			player.Simulate(dt);
-			if(g_input_state.space_key)
+			if(g_input_state.space_key && player.fire_recharge == 0.0)
 			{
 				Bullet *temp = new Bullet(player.pos, glm::vec3(-sinf(player.rot), 0, -cosf(player.rot)));
+				player.fire_recharge = 0.0f;
 				objects.push_back(temp);
 			}
-			for(auto s : objects)
+			for(unsigned int i = 0; i < objects.size(); i++)
 			{
+				Object *s = objects[i];
 				s->Simulate(dt);
+				if(!s->alive)
+				{
+					objects.at(i) = objects.at(objects.size() - 1);
+					objects.pop_back();
+					i--;
+				}
 			}
 
 			handler.HandleEvents();

@@ -10,8 +10,10 @@ public:
 	float     rot;
 	float     rot_speed;
 	float     speed;
+	float     fire_recharge;
+	float     recharge_rate;
 
-	void      Simulate(double dt = 1.0 / 60.0);
+	void      Simulate(float dt = 1.0 / 60.0);
 	void      Report(void);
 	void      MoveForward(double dt);
 	void      MoveBackward(double dt);
