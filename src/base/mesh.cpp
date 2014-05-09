@@ -1,4 +1,5 @@
 #include "mesh.h"
+#include <string.h>
 #include <iostream>
 #include <errno.h>
 #include <glm/gtc/matrix_transform.hpp>
