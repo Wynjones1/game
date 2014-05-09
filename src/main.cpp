@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 		while(accumulator >= dt)
 		{
 			player.Simulate(dt);
-			if(g_input_state.space_key && player.fire_recharge == 0.0)
+			if(g_input_state.mouse_buttons[0] && player.fire_recharge == 0.0)
 			{
 				Bullet *temp = new Bullet(player.pos, glm::vec3(-sinf(player.rot), 0, -cosf(player.rot)));
 				player.fire_recharge = 0.0f;

@@ -10,6 +10,8 @@ public:
 	void KeyDown();
 	void KeyUp();
 	void MouseMotion();
+	void MouseButtonUp(void);
+	void MouseButtonDown(void);
 	void ResetMouseMotion();
 };
 

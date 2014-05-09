@@ -68,6 +68,39 @@ void EventHandler::ResetMouseMotion()
 	g_input_state.mouse_rot[0] = 0;
 	g_input_state.mouse_rot[1] = 0;
 }
+
+void EventHandler::MouseButtonUp(void)
+{
+	switch(event.button.button)
+	{
+		case SDL_BUTTON_LEFT:
+			g_input_state.mouse_buttons[0] = 0;
+			break;
+		case SDL_BUTTON_MIDDLE:
+			g_input_state.mouse_buttons[1] = 0;
+			break;
+		case SDL_BUTTON_RIGHT:
+			g_input_state.mouse_buttons[2] = 0;
+			break;
+	}
+}
+
+void EventHandler::MouseButtonDown(void)
+{
+	switch(event.button.button)
+	{
+		case SDL_BUTTON_LEFT:
+			g_input_state.mouse_buttons[0] = 1;
+			break;
+		case SDL_BUTTON_MIDDLE:
+			g_input_state.mouse_buttons[1] = 1;
+			break;
+		case SDL_BUTTON_RIGHT:
+			g_input_state.mouse_buttons[2] = 1;
+			break;
+	}
+}
+
 void EventHandler::HandleEvents()
 {
 	ResetMouseMotion();
@@ -85,6 +118,12 @@ void EventHandler::HandleEvents()
 			break;
 		case SDL_MOUSEMOTION:
 			MouseMotion();
+			break;
+		case SDL_MOUSEBUTTONUP:
+			MouseButtonUp();
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			MouseButtonDown();
 			break;
 		}
 	}
