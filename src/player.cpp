@@ -11,10 +11,12 @@ Player::Player()
 , speed(5.0f)
 , fire_recharge(0.0f)
 , recharge_rate(1.0f)
+, mesh("./data/gun1.ply")
 {}
 
 void Player::Simulate(float dt)
 {
+	mesh.texture = new Texture();
 	if(g_input_state.LetterPressed('w'))
 	{
 		MoveForward(dt);
@@ -125,4 +127,17 @@ void Player::StrifeRight(double dt)
 	pos[0] += mov[0];
 	pos[1] += mov[1];
 	pos[2] += mov[2];
+}
+
+void Player::Draw(Program &program)
+{
+	glm::mat4 m(1.0);
+	m = glm::translate(m, pos);
+	m = glm::rotate(m, rot, glm::vec3(0, 1, 0));
+	m = glm::translate(m, glm::vec3(0.6, -0.5, -1));
+	m = glm::scale(m, glm::vec3(2.0));
+	glDisable(GL_DEPTH_TEST);
+	glUniformMatrix4fv(program.model, 1, GL_FALSE, &m[0][0]);
+	mesh.Draw(program);
+	glEnable(GL_DEPTH_TEST);
 }

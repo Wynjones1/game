@@ -46,7 +46,6 @@ int main(int argc, char **argv)
 	std::vector<Object*> objects;
 
 	objects.push_back(world);
-	objects.push_back(new Mesh("./data/gun1.ply"));
 
 	/* Start the mainloop */
 	float time = SDL_GetTicks() / 1000.0f;
@@ -68,7 +67,7 @@ int main(int argc, char **argv)
 			if(g_input_state.mouse_buttons[0] && player.fire_recharge == 0.0)
 			{
 				Bullet *temp = new Bullet(player.pos, glm::vec3(-sinf(player.rot), 0, -cosf(player.rot)));
-				player.fire_recharge = 0.0f;
+				player.fire_recharge = 0.5f;
 				objects.push_back(temp);
 			}
 			for(unsigned int i = 0; i < objects.size(); i++)
@@ -94,6 +93,7 @@ int main(int argc, char **argv)
 			Draw(d, program);
 		}
 		axis.Draw(program);
+		player.Draw(program);
 		window.SwapBuffer();
 	}
 

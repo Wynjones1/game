@@ -1,7 +1,8 @@
 #pragma once
-#include "drawable.h"
+#include "object.h"
+#include "mesh.h"
 
-class Player
+class Player : DynamicObject
 {
 public:
 	Player();
@@ -13,7 +14,7 @@ public:
 	float     fire_recharge;
 	float     recharge_rate;
 
-	void      Simulate(float dt = 1.0 / 60.0);
+	void      Simulate(float dt);
 	void      Report(void);
 	void      MoveForward(double dt);
 	void      MoveBackward(double dt);
@@ -23,4 +24,7 @@ public:
 	void      StrifeLeft(double dt);
 	void      StrifeRight(double dt);
 	glm::mat4 GetViewMatrix(void);
+
+	void Draw(Program &program);
+	Mesh mesh;
 };
