@@ -8,11 +8,20 @@ public:
 	InputState(void);
 	~InputState(void);
 
+	//Keyboard State
 	std::array<bool, 26> letter_keys;
 	bool  left, right, up, down;
 	bool  space_key;
 	bool  mouse_buttons[3];
 	float mouse_rot[2];
+
+	//Controller State
+	bool dpad[4];
+	bool a, b, x, y,
+		 lb, rb,
+		 back, start,
+		 xbox,
+		 lstick, rstick;
 
 	bool LetterPressed(char letter)
 	{

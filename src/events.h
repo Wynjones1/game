@@ -13,6 +13,9 @@ public:
 	void MouseButtonUp(void);
 	void MouseButtonDown(void);
 	void ResetMouseMotion();
+	void GameControllerButton(bool down);
+	void GameControllerAxis(void);
 };
 
+extern SDL_GameController *game_controller;
 #endif

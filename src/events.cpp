@@ -101,6 +101,65 @@ void EventHandler::MouseButtonDown(void)
 	}
 }
 
+void EventHandler::GameControllerButton(bool down)
+{
+	switch(event.cbutton.button)
+	{
+		case 0:
+			g_input_state.a = down;
+			break;
+		case 1:
+			g_input_state.b = down;
+			break;
+		case 2:
+			g_input_state.x = down;
+			break;
+		case 3:
+			g_input_state.y = down;
+			break;
+		case 4:
+			g_input_state.back = down;
+			break;
+		case 5:
+			g_input_state.xbox = down;
+			break;
+		case 6:
+			g_input_state.start = down;
+			break;
+		case 7:
+			g_input_state.lstick = down;
+			break;
+		case 8:
+			g_input_state.rstick= down;
+			break;
+		case 9:
+			g_input_state.lb = down;
+			break;
+		case 10:
+			g_input_state.rb = down;
+			break;
+		case 11:
+			g_input_state.dpad[0] = down;
+			break;
+		case 12:
+			g_input_state.dpad[1] = down;
+			break;
+		case 13:
+			g_input_state.dpad[2] = down;
+			break;
+		case 14:
+			g_input_state.dpad[3] = down;
+			break;
+		default:
+			std::cout << (int)event.cbutton.button << std::endl;
+			break;
+	}
+}
+
+void EventHandler::GameControllerAxis(void)
+{
+}
+
 void EventHandler::HandleEvents()
 {
 	ResetMouseMotion();
@@ -125,6 +184,17 @@ void EventHandler::HandleEvents()
 		case SDL_MOUSEBUTTONDOWN:
 			MouseButtonDown();
 			break;
+		case SDL_CONTROLLERBUTTONDOWN:
+			GameControllerButton(true);
+			break;
+		case SDL_CONTROLLERBUTTONUP:
+			GameControllerButton(false);
+			break;
+		case SDL_CONTROLLERAXISMOTION:
+			GameControllerAxis();
+			break;
 		}
 	}
 }
+
+SDL_GameController *game_controller;

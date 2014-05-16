@@ -53,6 +53,8 @@ int main(int argc, char **argv)
 	float accumulator = 0.0;
 	float dt = 0.01f;
 	Texture *tex0 = new Texture("./data/grid.ppm");
+	//TODO This will need to be fixed.
+	game_controller = SDL_GameControllerOpen(0);
 	while(1)
 	{
 		new_time   = SDL_GetTicks() / 1000.0f;
@@ -64,7 +66,7 @@ int main(int argc, char **argv)
 		while(accumulator >= dt)
 		{
 			player.Simulate(dt);
-			if(g_input_state.mouse_buttons[0] && player.fire_recharge == 0.0)
+			if(g_input_state.a)// && player.fire_recharge == 0.0)
 			{
 				Bullet *temp = new Bullet(player.pos, glm::vec3(-sinf(player.rot), 0, -cosf(player.rot)));
 				player.fire_recharge = 0.5f;
