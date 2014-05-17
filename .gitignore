@@ -4,6 +4,7 @@ game
 testing
 Makefile
 cmake_install.cmake
+build
 *.a
 *.vcxproj
 *.filters
