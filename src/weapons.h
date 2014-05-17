@@ -15,7 +15,7 @@ public:
 		//vel[0] += ((float)rand() / RAND_MAX) * 0.05f;
 		//vel[1] += ((float)rand() / RAND_MAX) * 0.05f;
 		//vel[2] += ((float)rand() / RAND_MAX) * 0.05f;
-		life = 0.1f + 2.0f * ((float)rand() / RAND_MAX);
+		life = 3.0f;
 
 		pos    += glm::vec3(0.3f, 0.3, 0.3f) * glm::cross(vel, glm::vec3(0, 1, 0));
 		pos[1] -= 0.3f;

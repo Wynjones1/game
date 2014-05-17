@@ -17,6 +17,7 @@ Player::Player()
 void Player::Simulate(float dt)
 {
 	mesh.texture = new Texture();
+#if 0
 	if(g_input_state.LetterPressed('w'))
 	{
 		MoveForward(dt);
@@ -37,6 +38,30 @@ void Player::Simulate(float dt)
 	{
 		Turn();
 	}
+#else
+	if(g_input_state.laxis[0] < -0.3)
+	{
+		StrifeLeft(-g_input_state.laxis[0] * dt);
+	}
+	else if(g_input_state.laxis[0] > 0.3)
+	{
+		StrifeRight(g_input_state.laxis[0] * dt);
+	}
+
+	if(g_input_state.laxis[1] < -0.3)
+	{
+		MoveForward(-g_input_state.laxis[1] * dt);
+	}
+	else if(g_input_state.laxis[1] > 0.3)
+	{
+		MoveBackward(g_input_state.laxis[1] * dt);
+	}
+
+	if(g_input_state.raxis[0] < -0.3 || g_input_state.raxis[0] > 0.3)
+	{
+		rot -= 3.5 * g_input_state.raxis[0] * rot_speed;
+	}
+#endif
 	fire_recharge = std::max(0.0f, fire_recharge - recharge_rate * dt);
 	//Report();
 }

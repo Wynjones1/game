@@ -158,6 +158,30 @@ void EventHandler::GameControllerButton(bool down)
 
 void EventHandler::GameControllerAxis(void)
 {
+	float value = (float)event.caxis.value / 32768;
+	switch(event.caxis.axis)
+	{
+		case 0:
+			g_input_state.laxis[0] = value;
+			break;
+		case 1:
+			g_input_state.laxis[1] = value;
+			break;
+		case 2:
+			g_input_state.raxis[0] = value;
+			break;
+		case 3:
+			g_input_state.raxis[1] = value;
+			break;
+		case 4:
+			g_input_state.ltrigger = value;
+			break;
+		case 5:
+			g_input_state.rtrigger = value;
+			break;
+		default:
+			break;
+	}
 }
 
 void EventHandler::HandleEvents()

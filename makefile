@@ -1,9 +1,10 @@
 all:
-	cmake -DCMAKE_BUILD_TYPE=debug .
-	make -f Makefile -j5
+	mkdir -p build
+	cd build && cmake -DCMAKE_BUILD_TYPE=debug ../
+	cd build && make -f Makefile -j5
 
 run: all
-	./game
+	./build/game
 
 clean:
-	rm -rf CMakeCache.txt cmake_install.cmake CMakeFiles ./game ./testing ./libbase.a
+	rm -Rf build

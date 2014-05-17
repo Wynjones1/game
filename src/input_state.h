@@ -22,6 +22,7 @@ public:
 		 back, start,
 		 xbox,
 		 lstick, rstick;
+	float laxis[2], raxis[2], ltrigger, rtrigger;
 
 	bool LetterPressed(char letter)
 	{
