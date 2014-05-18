@@ -1,5 +1,6 @@
 #include "player.h"
 #include "input_state.h"
+#include "events.h"
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <algorithm>
@@ -11,13 +12,10 @@ Player::Player()
 , speed(5.0f)
 , fire_recharge(0.0f)
 , recharge_rate(1.0f)
-, mesh("./data/gun1.ply")
 {}
 
-void Player::Simulate(float dt)
+void Player::Keyboard(float dt)
 {
-	mesh.texture = new Texture();
-#if 0
 	if(g_input_state.LetterPressed('w'))
 	{
 		MoveForward(dt);
@@ -38,7 +36,10 @@ void Player::Simulate(float dt)
 	{
 		Turn();
 	}
-#else
+}
+
+void Player::Controller(float dt)
+{
 	if(g_input_state.laxis[0] < -0.3)
 	{
 		StrifeLeft(-g_input_state.laxis[0] * dt);
@@ -61,7 +62,18 @@ void Player::Simulate(float dt)
 	{
 		rot -= 3.5 * g_input_state.raxis[0] * rot_speed;
 	}
-#endif
+}
+
+void Player::Simulate(float dt)
+{
+	if(g_game_controller)
+	{
+		Controller(dt);
+	}
+	else
+	{
+		Keyboard(dt);
+	}
 	fire_recharge = std::max(0.0f, fire_recharge - recharge_rate * dt);
 	//Report();
 }
@@ -163,6 +175,5 @@ void Player::Draw(Program &program)
 	m = glm::scale(m, glm::vec3(2.0));
 	glDisable(GL_DEPTH_TEST);
 	glUniformMatrix4fv(program.model, 1, GL_FALSE, &m[0][0]);
-	mesh.Draw(program);
 	glEnable(GL_DEPTH_TEST);
 }

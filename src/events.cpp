@@ -221,4 +221,4 @@ void EventHandler::HandleEvents()
 	}
 }
 
-SDL_GameController *game_controller;
+SDL_GameController *g_game_controller;

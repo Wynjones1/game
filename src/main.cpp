@@ -36,16 +36,12 @@ int main(int argc, char **argv)
 	glm::mat4 projection = glm::perspective(60.0f * (float)(180.0f / M_PI), g_config.aspect, 0.01f, 1000.0f);
 	glUniformMatrix4fv(program.projection, 1, GL_FALSE, glm::value_ptr(projection)); 
 
-	Mesh *world    = new Mesh("./data/test_world.ply");
-	world->texture = new Texture("./data/wall.ppm");
 	Axis axis;
 	Player player = Player();
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	std::vector<Object*> objects;
-
-	objects.push_back(world);
 
 	/* Start the mainloop */
 	float time = SDL_GetTicks() / 1000.0f;
@@ -54,7 +50,7 @@ int main(int argc, char **argv)
 	float dt = 0.01f;
 	Texture *tex0 = new Texture("./data/grid.ppm");
 	//TODO This will need to be fixed.
-	game_controller = SDL_GameControllerOpen(0);
+	g_game_controller = SDL_GameControllerOpen(0);
 	while(1)
 	{
 		new_time   = SDL_GetTicks() / 1000.0f;
@@ -66,12 +62,6 @@ int main(int argc, char **argv)
 		while(accumulator >= dt)
 		{
 			player.Simulate(dt);
-			if(g_input_state.rtrigger > 0.8)// && player.fire_recharge == 0.0)
-			{
-				Bullet *temp = new Bullet(player.pos, glm::vec3(-sinf(player.rot), 0, -cosf(player.rot)));
-				player.fire_recharge = 0.5f;
-				objects.push_back(temp);
-			}
 			for(unsigned int i = 0; i < objects.size(); i++)
 			{
 				Object *s = objects[i];

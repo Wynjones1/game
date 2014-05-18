@@ -1,25 +1,16 @@
 #include <iostream>
 #include "window.h"
-
-void draw_triangle(void)
-{
-}
+#include "shaders.h"
+#include <glm/glm.hpp>
+#include <GL/gl3w.h>
 
 Window init(void)
 {
 	Window window = Window(400, 400);
 
-	Shader vert = Shader(GL_VERTEX_SHADER, "./data/simple.vertex");
-	Shader frag = Shader(GL_FRAGMENT_SHADER, "./data/simple.fragment");
-
-	Program program = Program();
-	program.AddShader(vert);
-	program.AddShader(frag);
-	program.Compile();
+	Program program = Program("./data/simple.vertex", "./data/simple.fragment");
 
 	program.Use();
-
-	//glUniform1i(glGetUniformLocation(program.program_id, "sampler0"), 0);
 
 	glm::mat4 temp_uniform = glm::mat4(1.0);
 	glUniformMatrix4fv(program.model,      1, GL_FALSE, &temp_uniform[0][0]);
@@ -34,21 +25,6 @@ Window init(void)
 int main(int argc, char **argv)
 {
 	Window w = init();
-	draw_triangle();
 	w.SwapBuffer();
-	SDL_Event event;
-	int c = 0;
-	SDL_GameController *gc = SDL_GameControllerOpen(0);
-	if(!gc) return 0;
-	std::cout << "Opened the joystick." << std::endl;
-
-	while(1)
-	{
-		while(SDL_PollEvent(&event))
-		{
-			std::cout << "Got an event " << c++ << std::endl;
-			if(event.type == SDL_KEYDOWN) return 0;
-		}
-	}
 	return 0;
 }

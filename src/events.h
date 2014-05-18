@@ -17,5 +17,5 @@ public:
 	void GameControllerAxis(void);
 };
 
-extern SDL_GameController *game_controller;
+extern SDL_GameController *g_game_controller;
 #endif

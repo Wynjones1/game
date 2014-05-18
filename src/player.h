@@ -26,5 +26,7 @@ public:
 	glm::mat4 GetViewMatrix(void);
 
 	void Draw(Program &program);
-	Mesh mesh;
+
+	void Keyboard(float dt);
+	void Controller(float dt);
 };
