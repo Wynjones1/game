@@ -12,6 +12,7 @@
 #include "texture.h"
 #include "weapons.h"
 #include "object.h"
+#include "wall.h"
 
 void Setup(void)
 {
@@ -42,6 +43,7 @@ int main(int argc, char **argv)
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	std::vector<Object*> objects;
+	objects.push_back(new Wall());
 
 	/* Start the mainloop */
 	float time = SDL_GetTicks() / 1000.0f;

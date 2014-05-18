@@ -2,5 +2,5 @@
 
 class Wall : public StaticObject
 {
-	
+public:
 };
